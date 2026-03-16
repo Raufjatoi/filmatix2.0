@@ -239,11 +239,11 @@ function initSiteAnimations() {
   });
 }
 
-// === PRELOADER LOGIC ===
+// === STRICT PRELOADER LOGIC ===
 function preloadMedia() {
   const mediaElements = [
     ...document.querySelectorAll('img'),
-    ...document.querySelectorAll('video[preload="auto"]') // only wait for critical videos
+    ...document.querySelectorAll('video') // Wait for all videos on the page to buffer
   ];
   
   let loadedCount = 0;
@@ -260,35 +260,41 @@ function preloadMedia() {
     if (progressBar) progressBar.style.width = percent + '%';
     
     if (loadedCount >= totalMedia) {
-      setTimeout(initSiteAnimations, 400); // slight delay for smooth transition
+      setTimeout(initSiteAnimations, 500); // slight delay for smooth transition and render
     }
   }
 
   mediaElements.forEach(media => {
     if (media.tagName.toLowerCase() === 'img') {
-      if (media.complete) {
+      if (media.complete && media.naturalHeight !== 0) {
         updateProgress();
       } else {
-        media.addEventListener('load', updateProgress);
-        media.addEventListener('error', updateProgress);
+        media.addEventListener('load', updateProgress, { once: true });
+        media.addEventListener('error', updateProgress, { once: true });
       }
     } else if (media.tagName.toLowerCase() === 'video') {
-      if (media.readyState >= 3) {
+      // readyState 4 means it has enough data to play straight through without stopping
+      if (media.readyState >= 4) {
         updateProgress();
       } else {
-        media.addEventListener('canplay', updateProgress);
-        media.addEventListener('error', updateProgress);
+        // canplaythrough means enough gets buffered to play smoothly
+        media.addEventListener('canplaythrough', updateProgress, { once: true });
+        media.addEventListener('error', updateProgress, { once: true });
+        
+        // Manual override for videos that stall or are cached weirdly by the browser
+        media.load();
       }
     }
   });
   
-  // Fallback in case of hanging loads
+  // Failsafe 8 seconds so the user isn't stuck forever on a bad connection
   setTimeout(() => {
     if (body.classList.contains('loading')) {
+      console.warn('Preloader timed out. Bypassing wait.');
       initSiteAnimations();
     }
-  }, 5000); // Max wait 5 seconds
+  }, 8000); 
 }
 
-// Initiate preloading
+// Initiate preloading strictly on DOMContentLoaded to catch assets early
 document.addEventListener('DOMContentLoaded', preloadMedia);
