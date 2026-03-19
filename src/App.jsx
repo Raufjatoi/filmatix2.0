@@ -9,7 +9,7 @@ const LazyIframe = ({ className, src, width, height, title, aspectRatio }) => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const { ref, inView } = useInView({
     triggerOnce: true,
-    rootMargin: '400px 0px', // Load comfortably before it enters screen
+    rootMargin: '2500px 0px', // Massively pre-load 2.5 screens in advance!
   });
 
   const videoIdMatch = src.match(/video\/(\d+)/);
@@ -27,16 +27,6 @@ const LazyIframe = ({ className, src, width, height, title, aspectRatio }) => {
       backgroundPosition: 'center',
       overflow: 'hidden'
     }}>
-      <style>{`
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-      `}</style>
-      
-      {!iframeLoaded && (
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, backdropFilter: 'blur(5px)' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: '3px solid rgba(255,255,255,0.1)', borderTopColor: '#c8602a', animation: 'spin 1s linear infinite' }}></div>
-        </div>
-      )}
-
       {inView && (
         <iframe
           src={src}
