@@ -5,15 +5,10 @@
 import Lenis from 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm';
 import { animate, inView, stagger, scroll } from 'https://cdn.jsdelivr.net/npm/motion@11.11.13/+esm';
 
-// --- Preloader & Media Optimization ---
-const preloader = document.getElementById('preloader');
-const progressBar = document.getElementById('preloader-progress');
+// --- Site Initialization ---
 const body = document.body;
 
 function initSiteAnimations() {
-  body.classList.remove('loading');
-  if (preloader) preloader.classList.add('preloader--done');
-
   // Start smooth scrolling once loaded
   const lenis = new Lenis({
     duration: 1.2,
@@ -219,6 +214,7 @@ function initSiteAnimations() {
 
   // --- Video Players ---
   document.querySelectorAll('.portfolio-item__video, .portfolio-featured__video').forEach(function (video) {
+    if (video.tagName.toLowerCase() !== 'video') return;
     video.style.cursor = 'pointer';
     video.addEventListener('click', function () {
       if (video.muted) {
@@ -239,62 +235,5 @@ function initSiteAnimations() {
   });
 }
 
-// === STRICT PRELOADER LOGIC ===
-function preloadMedia() {
-  const mediaElements = [
-    ...document.querySelectorAll('img'),
-    ...document.querySelectorAll('video') // Wait for all videos on the page to buffer
-  ];
-  
-  let loadedCount = 0;
-  const totalMedia = mediaElements.length;
-  
-  if (totalMedia === 0) {
-    initSiteAnimations();
-    return;
-  }
-  
-  function updateProgress() {
-    loadedCount++;
-    const percent = Math.floor((loadedCount / totalMedia) * 100);
-    if (progressBar) progressBar.style.width = percent + '%';
-    
-    if (loadedCount >= totalMedia) {
-      setTimeout(initSiteAnimations, 500); // slight delay for smooth transition and render
-    }
-  }
-
-  mediaElements.forEach(media => {
-    if (media.tagName.toLowerCase() === 'img') {
-      if (media.complete && media.naturalHeight !== 0) {
-        updateProgress();
-      } else {
-        media.addEventListener('load', updateProgress, { once: true });
-        media.addEventListener('error', updateProgress, { once: true });
-      }
-    } else if (media.tagName.toLowerCase() === 'video') {
-      // readyState 4 means it has enough data to play straight through without stopping
-      if (media.readyState >= 4) {
-        updateProgress();
-      } else {
-        // canplaythrough means enough gets buffered to play smoothly
-        media.addEventListener('canplaythrough', updateProgress, { once: true });
-        media.addEventListener('error', updateProgress, { once: true });
-        
-        // Manual override for videos that stall or are cached weirdly by the browser
-        media.load();
-      }
-    }
-  });
-  
-  // Failsafe 8 seconds so the user isn't stuck forever on a bad connection
-  setTimeout(() => {
-    if (body.classList.contains('loading')) {
-      console.warn('Preloader timed out. Bypassing wait.');
-      initSiteAnimations();
-    }
-  }, 8000); 
-}
-
-// Initiate preloading strictly on DOMContentLoaded to catch assets early
-document.addEventListener('DOMContentLoaded', preloadMedia);
+// Initiate animations strictly on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', initSiteAnimations);

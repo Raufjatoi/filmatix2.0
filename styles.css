@@ -380,7 +380,7 @@ background-image: url('images/hero.png');
 .artisan-slider__container {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1732 / 1192;
   overflow: hidden;
   border: 1px solid var(--border);
   cursor: ew-resize;
@@ -616,7 +616,6 @@ background-image: url('images/hero.png');
 
 .portfolio-item {
   position: relative;
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   cursor: pointer;
   border-radius: 4px; /* Premium rounding */
@@ -648,6 +647,10 @@ background-image: url('images/hero.png');
 .portfolio-item__video {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
@@ -718,6 +721,7 @@ background-image: url('images/hero.png');
 .portfolio-featured {
   margin-bottom: 24px;
   width: 100%;
+  aspect-ratio: 1920 / 1080;
   overflow: hidden;
   border-radius: 8px;
   position: relative;
@@ -735,7 +739,8 @@ background-image: url('images/hero.png');
 
 .portfolio-featured__video {
   width: 100%;
-  height: auto;
+  height: 100%;
+  border: none;
   display: block;
   border-radius: 8px;
   transform: scale(1.01);
