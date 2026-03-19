@@ -354,7 +354,7 @@ export default function App() {
               <p>Same creative control. No production logistics.</p>
             </motion.div>
             <motion.div className="about__image" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={fadeUpVariant}>
-              <img src="images/Anti_Slop_Philosophy.png" alt="The Anti-Slop Philosophy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+              <img src="/images/Anti_Slop_Philosophy.png" alt="The Anti-Slop Philosophy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
             </motion.div>
           </div>
         </div>
@@ -370,7 +370,13 @@ export default function App() {
             Book a 15-minute call to discuss your project.
           </motion.p>
           <motion.div className="contact" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={fadeUpVariant}>
-            <form className="contact__form" id="contactForm" action="mailto:contact@amdelllc.com" method="POST" encType="text/plain">
+            <form className="contact__form" id="contactForm" onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const subject = encodeURIComponent(`Inquiry from ${formData.get('name')} (${formData.get('company') || 'N/A'})`);
+              const body = encodeURIComponent(`Name: ${formData.get('name')}\nCompany: ${formData.get('company') || 'N/A'}\nProject Type: ${formData.get('projectType') || 'None'}\n\n${formData.get('message')}`);
+              window.location.href = `mailto:contact@amdelllc.com?subject=${subject}&body=${body}`;
+            }}>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="name" className="form-label">Name</label>
