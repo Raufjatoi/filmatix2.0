@@ -4,46 +4,29 @@ import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { motion } from 'framer-motion';
 import './index.css';
 
-// Reusable Lazy Iframe Component (Conditional Facade)
-const LazyIframe = ({ className, src, width, height, title, aspectRatio }) => {
-  const [iframeLoaded, setIframeLoaded] = useState(false);
+// Reusable Lazy Video Component (For Instant Local Playback)
+const LazyVideo = ({ className, src, aspectRatio }) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    rootMargin: '2500px 0px', // Massively pre-load 2.5 screens in advance!
+    rootMargin: '1000px 0px', // Pre-load off-screen safely
   });
-
-  const videoIdMatch = src.match(/video\/(\d+)/);
-  const videoId = videoIdMatch ? videoIdMatch[1] : null;
-  // Automatically pull the highest quality thumbnail available for this Vimeo video
-  const thumbnailUrl = videoId ? `https://vumbnail.com/${videoId}.jpg` : null;
 
   return (
     <div ref={ref} className={className} style={{ 
       ...(aspectRatio ? { aspectRatio } : { width: '100%', height: '100%' }),
       position: 'relative',
       backgroundColor: '#111',
-      backgroundImage: thumbnailUrl ? `url(${thumbnailUrl})` : 'none',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
       overflow: 'hidden'
     }}>
       {inView && (
-        <iframe
+        <video
           src={src}
-          width={width}
-          height={height}
-          frameBorder="0"
-          onLoad={() => {
-            // Buffer to give Vimeo's internal black screen time to evaluate physics and autoplay
-            setTimeout(() => setIframeLoaded(true), 2500);
-          }}
-          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-          title={title}
-          style={{ 
-            width: '100%', height: '100%', objectFit: 'cover', border: 'none', 
-            position: 'absolute', top: 0, left: 0, zIndex: 2, 
-            opacity: iframeLoaded ? 1 : 0, transition: 'opacity 1s ease' 
-          }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
         />
       )}
     </div>
@@ -170,19 +153,13 @@ export default function App() {
             >
               <div className="artisan-slider__before">
                 <div className="artisan-slider__image artisan-slider__image--before">
-                  <LazyIframe 
-                    src="https://player.vimeo.com/video/1175076344?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" 
-                    width="1732" height="1192" title="Baccarat_Rouge_540_Label_Before" 
-                  />
+                  <LazyVideo src="/videos/Baccarat_Rouge_540_Label_Before.mp4" />
                 </div>
                 <span className="artisan-slider__label artisan-slider__label--before">One-Click AI Output</span>
               </div>
               <div className="artisan-slider__after" style={{ clipPath: `inset(0 0 0 ${sliderPos}%)` }}>
                 <div className="artisan-slider__image artisan-slider__image--after">
-                  <LazyIframe 
-                    src="https://player.vimeo.com/video/1175076084?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" 
-                    width="1732" height="1192" title="Baccarat_Rouge_540_Label_After" 
-                  />
+                  <LazyVideo src="/videos/Baccarat_Rouge_540_Label_After.mp4" />
                 </div>
                 <span className="artisan-slider__label artisan-slider__label--after">Filmatix Manual Finish</span>
               </div>
@@ -272,27 +249,20 @@ export default function App() {
             Selected Work
           </motion.h2>
           <motion.div className="portfolio-featured" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={fadeUpVariant}>
-            <LazyIframe 
-              className="portfolio-featured__video" 
-              src="https://player.vimeo.com/video/1175078063?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1" 
-              width="1920" height="1080" title="Outfit_Story" 
-            />
+            <LazyVideo className="portfolio-featured__video" src="/videos/Outfit_Story.mp4" />
           </motion.div>
           <motion.div className="portfolio-grid" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-15%" }} variants={{ visible: { transition: { staggerChildren: 0.15 } } }}>
             {[
-              { src: 'https://player.vimeo.com/video/1175078897', width: 1080, height: 1920, title: 'ZARA_style_fashion', tag: 'Fashion Film', desc: 'Spring/Summer Lookbook' },
-              { src: 'https://player.vimeo.com/video/1175077038', width: 1168, height: 1776, title: 'Hair_Products_Promo', tag: 'Product Reel', desc: 'Haircare Product Reel' },
-              { src: 'https://player.vimeo.com/video/1175077565', width: 1184, height: 1760, title: 'makeup-Before_After', tag: 'Beauty', desc: 'Beauty Transformation' },
-              { src: 'https://player.vimeo.com/video/1175076593', width: 1176, height: 1756, title: 'fashion_bike_2', tag: 'Editorial', desc: 'Editorial Fashion Film' },
-              { src: 'https://player.vimeo.com/video/1175077814', width: 1072, height: 1932, title: 'Mugler_Perfume', tag: 'Fashion Film', desc: 'Fragrance Campaign' },
-              { src: 'https://player.vimeo.com/video/1175076461', width: 1176, height: 1756, title: '2_products', tag: 'Product Reel', desc: 'Product Showcase' },
+              { src: '/videos/ZARA_style_fashion.mp4', width: 1080, height: 1920, tag: 'Fashion Film', desc: 'Spring/Summer Lookbook' },
+              { src: '/videos/Hair_Products_Promo.mp4', width: 1168, height: 1776, tag: 'Product Reel', desc: 'Haircare Product Reel' },
+              { src: '/videos/makeup-Before_After.mp4', width: 1184, height: 1760, tag: 'Beauty', desc: 'Beauty Transformation' },
+              { src: '/videos/fashion_bike_2.mp4', width: 1176, height: 1756, tag: 'Editorial', desc: 'Editorial Fashion Film' },
+              { src: '/videos/Mugler_Perfume.mp4', width: 1072, height: 1932, tag: 'Fashion Film', desc: 'Fragrance Campaign' },
+              { src: '/videos/new.mp4', width: 1080, height: 1920, tag: 'Latest', desc: 'New Video' },
+              { src: '/videos/2_products.mp4', width: 1176, height: 1756, tag: 'Product Reel', desc: 'Product Showcase' },
             ].map((video, idx) => (
               <motion.div key={idx} className="portfolio-item" variants={fadeUpVariant} style={{ aspectRatio: `${video.width} / ${video.height}` }}>
-                <LazyIframe 
-                  className="portfolio-item__video" 
-                  src={`${video.src}?badge=0&autopause=0&player_id=0&app_id=58479&background=1`} 
-                  width={video.width} height={video.height} title={video.title} 
-                />
+                <LazyVideo className="portfolio-item__video" src={video.src} />
                 <div className="portfolio-item__overlay">
                   <span className="portfolio-item__tag">{video.tag}</span>
                   <h4 className="portfolio-item__title">{video.desc}</h4>
