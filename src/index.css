@@ -583,6 +583,14 @@ background-image: url('/images/hero.png');
   margin-bottom: 24px;
 }
 
+.tier__note {
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
 .tier__list {
   margin-bottom: 32px;
 }

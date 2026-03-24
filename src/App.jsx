@@ -185,60 +185,63 @@ export default function App() {
       <section className="section section--alt" id="services">
         <div className="container">
           <motion.h2 className="section__title" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={fadeUpVariant}>
-            Three Ways to Work With Us
+            From Product to Partnership
           </motion.h2>
           <motion.div className="tiers" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={{ visible: { transition: { staggerChildren: 0.2 } } }}>
+            
             <motion.div className="tier" variants={fadeUpVariant}>
               <div className="tier__number">01</div>
-              <h3 className="tier__name">Product to Model</h3>
+              <h3 className="tier__name">Product Photo Studio</h3>
               <p className="tier__label">ESSENTIALS</p>
-              <p className="tier__price">Starting from $XXX</p>
-              <p className="tier__desc">From product photo on white to AI-generated images with models wearing and using your products. Studio-quality stills ready for e-commerce, social media, and marketing.</p>
+              <p className="tier__price">Starting from $500</p>
+              <p className="tier__desc">Product model shoot — without a single shoot day.</p>
               <ul className="tier__list">
-                <li>Product placed on AI-generated model</li>
+                <li>Creative onboarding</li>
+                <li>10 products featured by AI model</li>
                 <li>Multiple poses and angles</li>
                 <li>Background customization</li>
-                <li>High-resolution output</li>
-                <li>2 rounds of revision</li>
-              </ul>
-              <a href="#contact" className="btn btn--outline" onClick={(e) => handleNavClick(e, '#contact')}>Get Started</a>
-            </motion.div>
-
-            <motion.div className="tier tier--featured" variants={fadeUpVariant}>
-              <div className="tier__badge">Most Popular</div>
-              <div className="tier__number">02</div>
-              <h3 className="tier__name">Image + Video Production</h3>
-              <p className="tier__label">CREATIVE</p>
-              <p className="tier__price">Starting from $XXXX</p>
-              <p className="tier__desc">Everything in Essentials, plus AI-generated video content and creative editorial imagery. Full motion reels, lookbook videos, and social-ready content.</p>
-              <ul className="tier__list">
-                <li>Everything in Tier 1</li>
-                <li>AI-generated video reels (15–60 seconds)</li>
-                <li>Creative editorial images</li>
-                <li>Multiple outfit/location variations</li>
-                <li>Custom music and sound design</li>
                 <li>3 rounds of revision</li>
+                <li>Final output: 2 images per product, high resolution</li>
               </ul>
+              <p className="tier__note">Includes full creative prep and Stage 2 Film Development roadmap.</p>
               <a href="#contact" className="btn btn--accent" onClick={(e) => handleNavClick(e, '#contact')}>Get Started</a>
             </motion.div>
 
             <motion.div className="tier" variants={fadeUpVariant}>
-              <div className="tier__number">03</div>
-              <h3 className="tier__name">Custom Solutions</h3>
-              <p className="tier__label">CREATIVE PARTNER</p>
-              <p className="tier__price">Let's Talk</p>
-              <p className="tier__desc">Full creative partnership. We become your AI production team — building custom campaigns, virtual model rosters, serialized content, and brand-ready assets at scale.</p>
+              <div className="tier__number">02</div>
+              <h3 className="tier__name">Product Film Studio</h3>
+              <p className="tier__label">CREATIVE</p>
+              <p className="tier__price">Custom pricing based on scope</p>
+              <p className="tier__desc">Your brand. Our full creative power. AI driven cinematography. Master crafted hand finish.</p>
               <ul className="tier__list">
-                <li>Dedicated creative direction</li>
-                <li>Custom AI model/character creation</li>
+                <li>Full A-Z product film production</li>
+                <li>AI-generated video reel</li>
+                <li>Custom editorial images crafted for your aesthetic</li>
+                <li>Multiple outfit and location variations</li>
+                <li>Custom music and sound design</li>
+                <li>3 rounds of revision</li>
+              </ul>
+              <a href="#contact" className="btn btn--outline" onClick={(e) => handleNavClick(e, '#contact')}>Get Started</a>
+            </motion.div>
+
+            <motion.div className="tier" variants={fadeUpVariant}>
+              <div className="tier__number">03</div>
+              <h3 className="tier__name">Creative Partnership</h3>
+              <p className="tier__price">Custom pricing based on requirements</p>
+              <p className="tier__desc">Filmatix fully integrates with your creative team.</p>
+              <ul className="tier__list">
+                <li>Direct collaboration with your creative director or agency</li>
+                <li>Co-creation from concept through final delivery</li>
+                <li>Custom AI character and model development</li>
                 <li>Campaign concepting and storyboarding</li>
-                <li>Ongoing content production</li>
+                <li>Full video and image production at scale</li>
                 <li>Brand style guide integration</li>
-                <li>Priority revisions</li>
-                <li>Priority turnaround</li>
+                <li>Dedicated priority turnaround</li>
+                <li>NDA and white-label options available</li>
               </ul>
               <a href="#contact" className="btn btn--outline" onClick={(e) => handleNavClick(e, '#contact')}>Contact Us</a>
             </motion.div>
+
           </motion.div>
         </div>
       </section>
