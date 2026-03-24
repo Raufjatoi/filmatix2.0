@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  filmatix-app:
+    build: .
+    container_name: filmatix-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
