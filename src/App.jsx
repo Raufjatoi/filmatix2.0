@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { motion } from 'framer-motion';
 import './index.css';
+import ChatWidget from './ChatWidget';
 
 // Reusable Lazy Video Component (For Instant Local Playback)
 const LazyVideo = ({ className, src, aspectRatio }) => {
@@ -407,6 +408,7 @@ export default function App() {
           </div>
         </div>
       </footer>
+      <ChatWidget />
     </ReactLenis>
   );
 }
